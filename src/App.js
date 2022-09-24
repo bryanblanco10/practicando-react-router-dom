@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./assets/css/style.css";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { HomePage } from "./views/HomePage";
+import { About } from "./views/About";
+import { NotFound } from "./views/NotFound";
+import { Users } from "./views/Users";
+import { UserDetail } from "./views/UserDetail";
+import { Dashboard } from "./views/Dashboard";
+// components
+import { NavBar } from "./components/NavBar";
 
-function App() {
+export const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <NavBar />
+      <Routes>
+      <Route exact strict path="/" element={ <HomePage />} />
+        <Route path="/users" element={ <Users /> } />
+        <Route path="/usuarios" element={ <Navigate to="/users" /> } />
+        <Route path="/user/:id" element={ <UserDetail /> } />
+        <Route path="/about" element={ <About /> } />
+        <Route path="/dashboard/*" element={ <Dashboard /> } >
+          <Route path="welcome" element={ <div>Welcome!!</div> } />
+          <Route path="goodbye" element={ <div>Good Bye!!</div> } />
+        </Route>
+        <Route path="*" element={ <NotFound /> } />
+      </Routes>
+    </BrowserRouter>
   );
-}
-
-export default App;
+};
